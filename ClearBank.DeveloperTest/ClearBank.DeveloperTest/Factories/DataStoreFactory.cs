@@ -1,5 +1,4 @@
 ﻿using ClearBank.DeveloperTest.Data;
-using ClearBank.DeveloperTest.Interfaces;
 
 namespace ClearBank.DeveloperTest.Factories
 {
@@ -7,18 +6,14 @@ namespace ClearBank.DeveloperTest.Factories
     {
         public IDataStore CreateDataStore(string storeType)
         {
-            IDataStore accountDataStore = null;
-
             if (storeType == "Backup")
             {
-                accountDataStore = new BackupAccountDataStore();
+                return new BackupAccountDataStore();
             }
             else
             {
-                accountDataStore = new AccountDataStore();
+                return new AccountDataStore();
             }
-
-            return accountDataStore;
         }
     }
 }

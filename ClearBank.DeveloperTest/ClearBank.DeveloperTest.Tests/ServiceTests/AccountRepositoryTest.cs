@@ -1,6 +1,5 @@
 ﻿using ClearBank.DeveloperTest.Data;
 using ClearBank.DeveloperTest.Factories;
-using ClearBank.DeveloperTest.Interfaces;
 using ClearBank.DeveloperTest.Services;
 using ClearBank.DeveloperTest.Types;
 using Moq;
@@ -10,43 +9,41 @@ namespace ClearBank.DeveloperTest.Tests.ServiceTests
 {
     public class AccountRepositoryTest
     {
-        readonly string accountNumber = "1234";
+        private readonly string _accountNumber = "1234";
         private readonly Mock<IConfigurationManager> _configurationManager;
         private readonly Mock<IDataStoreFactory> _dataStoreFactory;
         private readonly Mock<IDataStore> _accountDataStore;
+        private AccountRepository _accountService;
+
         public AccountRepositoryTest()
         {
             _configurationManager = new Mock<IConfigurationManager>();
             _dataStoreFactory = new Mock<IDataStoreFactory>();
             _accountDataStore = new Mock<IDataStore>();
-        }
 
-        [Fact]
-        public void GetAccount_FindsAccount_ReturnsMatchingAccount()
-        {
             _configurationManager.Setup(x => x.GetAppSettings("DataStoreType")).Returns((string)null);
             _dataStoreFactory.Setup(x => x.CreateDataStore(null)).Returns(_accountDataStore.Object);
-
-            var accountService = new AccountRepository(_configurationManager.Object, _dataStoreFactory.Object);
-            accountService.GetAccount(accountNumber);
-
-            _accountDataStore.Verify(x => x.GetAccount(accountNumber), Times.Once);
         }
 
         [Fact]
-        public void UpdatesAccount_FindsAccount_DeductsBalance()
+        public void GetAccount_WithAccountNumber_GetsAccountFromDataStore()
         {
-         
-            var account = new Account() { AccountNumber = accountNumber, Balance = 1100 };
+            _accountService = new AccountRepository(_configurationManager.Object, _dataStoreFactory.Object);
 
-            _configurationManager.Setup(x => x.GetAppSettings("DataStoreType")).Returns((string)null);
-            _dataStoreFactory.Setup(x => x.CreateDataStore(null)).Returns(_accountDataStore.Object);            
-            _accountDataStore.Setup(x => x.UpdateAccount(account));
+            _accountService.GetAccount(_accountNumber);
 
-            var accountService = new AccountRepository(_configurationManager.Object, _dataStoreFactory.Object);
-            accountService.UpdateAccount(account, 100);
+            _accountDataStore.Verify(x => x.GetAccount(_accountNumber), Times.Once);
+        }
 
-            Assert.Equal(1000, account.Balance);
+        [Fact]
+        public void UpdateAccount_DeductFromBalance_CallsDataStoreUpdateAccount()
+        {
+            var account = new Account() { AccountNumber = _accountNumber, Balance = 1100 };
+
+            _accountDataStore.Setup(x => x.UpdateAccount(account)); // Is this necessary?
+
+            _accountService.UpdateAccount(account, 100);
+
             _accountDataStore.Verify(x => x.UpdateAccount(account), Times.Once);
         }
     }

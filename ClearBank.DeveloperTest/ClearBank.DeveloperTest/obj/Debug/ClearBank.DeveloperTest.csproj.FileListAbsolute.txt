@@ -3,3 +3,9 @@ C:\Anand\Tests\Latest\ClearBank.DeveloperTest\ClearBank.DeveloperTest\bin\Debug\
 C:\Anand\Tests\Latest\ClearBank.DeveloperTest\ClearBank.DeveloperTest\obj\Debug\ClearBank.DeveloperTest.csprojResolveAssemblyReference.cache
 C:\Anand\Tests\Latest\ClearBank.DeveloperTest\ClearBank.DeveloperTest\obj\Debug\ClearBank.DeveloperTest.dll
 C:\Anand\Tests\Latest\ClearBank.DeveloperTest\ClearBank.DeveloperTest\obj\Debug\ClearBank.DeveloperTest.pdb
+C:\dev\Practice\ClearBank.DeveloperTest\ClearBank.DeveloperTest\bin\Debug\ClearBank.DeveloperTest.dll
+C:\dev\Practice\ClearBank.DeveloperTest\ClearBank.DeveloperTest\bin\Debug\ClearBank.DeveloperTest.pdb
+C:\dev\Practice\ClearBank.DeveloperTest\ClearBank.DeveloperTest\obj\Debug\ClearBank.DeveloperTest.csprojResolveAssemblyReference.cache
+C:\dev\Practice\ClearBank.DeveloperTest\ClearBank.DeveloperTest\obj\Debug\ClearBank.DeveloperTest.csproj.CoreCompileInputs.cache
+C:\dev\Practice\ClearBank.DeveloperTest\ClearBank.DeveloperTest\obj\Debug\ClearBank.DeveloperTest.dll
+C:\dev\Practice\ClearBank.DeveloperTest\ClearBank.DeveloperTest\obj\Debug\ClearBank.DeveloperTest.pdb

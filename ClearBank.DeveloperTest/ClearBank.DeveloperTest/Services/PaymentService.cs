@@ -1,35 +1,30 @@
-﻿using ClearBank.DeveloperTest.Interfaces;
+﻿using ClearBank.DeveloperTest.Factories;
 using ClearBank.DeveloperTest.Types;
 
 namespace ClearBank.DeveloperTest.Services
 {
     public class PaymentService : IPaymentService
     {
-        private readonly IAccountRepository _accountRepositary;
-        private readonly IPaymentSchemeFactory _paymentSchemeFactory;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IPaymentSchemeValidatorFactory _paymentSchemeValidatorFactory;
 
-        public PaymentService(IAccountRepository accountRepositary, IPaymentSchemeFactory paymentSchemeFactory)
+        public PaymentService(IAccountRepository accountRepository, IPaymentSchemeValidatorFactory paymentSchemeValidatorFactory)
         {
-            _accountRepositary = accountRepositary;
-            _paymentSchemeFactory = paymentSchemeFactory;
+            _accountRepository = accountRepository;
+            _paymentSchemeValidatorFactory = paymentSchemeValidatorFactory;
         }
 
         public MakePaymentResult MakePayment(MakePaymentRequest request)
         {
-            var result = new MakePaymentResult { Success = false };
+            var success = false;
 
-            var account = _accountRepositary.GetAccount(request.DebtorAccountNumber);
-
-            if (account == null) { return result; }
-
-            var paymentSchemeValidator = _paymentSchemeFactory.GetPaymentSchemeValidator(request.PaymentScheme);
-
-            if (paymentSchemeValidator.IsValid(account, request.Amount))
+            if (_accountRepository.GetAccount(request.DebtorAccountNumber) is Account account && 
+                _paymentSchemeValidatorFactory.GetPaymentSchemeValidator(request.PaymentScheme).IsValid(account, request.Amount))
             {
-                result.Success = _accountRepositary.UpdateAccount(account, request.Amount);
+                success = _accountRepository.UpdateAccount(account, account.Balance - request.Amount);
             }
 
-            return result;
+            return new MakePaymentResult { Success = success };
         }
     }
 }

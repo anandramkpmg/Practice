@@ -7,12 +7,17 @@ namespace ClearBank.DeveloperTest.Tests.FactoryTests
 {
     public class PaymentSchemeFactoryTest
     {
+        private PaymentSchemeValidatorFactory _paymentSchemeValidatorFactory;
+
+        public PaymentSchemeFactoryTest()
+        {
+            _paymentSchemeValidatorFactory = new PaymentSchemeValidatorFactory();
+        }
+
         [Fact]
         public void PaymentSchemeFactory_BacsType_ReturnsBacsPaymentValidator()
         {
-            var paymentSchemeFactory = new PaymentSchemeFactory();
-
-            var type = paymentSchemeFactory.GetPaymentSchemeValidator(PaymentScheme.Bacs);
+            var type = _paymentSchemeValidatorFactory.GetPaymentSchemeValidator(PaymentScheme.Bacs);
 
             Assert.IsType<BacsPaymentValidator>(type);
         }
@@ -20,9 +25,7 @@ namespace ClearBank.DeveloperTest.Tests.FactoryTests
         [Fact]
         public void PaymentSchemeFactory_ChapsType_ReturnsChapsPaymentValidator()
         {
-            var paymentSchemeFactory = new PaymentSchemeFactory();
-
-            var type = paymentSchemeFactory.GetPaymentSchemeValidator(PaymentScheme.Chaps);
+            var type = _paymentSchemeValidatorFactory.GetPaymentSchemeValidator(PaymentScheme.Chaps);
 
             Assert.IsType<ChapsPaymentValidator>(type);
         }
@@ -30,11 +33,9 @@ namespace ClearBank.DeveloperTest.Tests.FactoryTests
         [Fact]
         public void PaymentSchemeFactory_FasterPaymentType_ReturnsFasterPaymentValidator()
         {
-            var paymentSchemeFactory = new PaymentSchemeFactory();
+            var type = _paymentSchemeValidatorFactory.GetPaymentSchemeValidator(PaymentScheme.FasterPayments);
 
-            var type = paymentSchemeFactory.GetPaymentSchemeValidator(PaymentScheme.FasterPayments);
-
-            Assert.IsType<FasterPaymentsValidator>(type);
+            Assert.IsType<FasterPaymentValidator>(type);
         }
     }
 }

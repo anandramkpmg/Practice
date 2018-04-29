@@ -1,19 +1,18 @@
 ﻿using ClearBank.DeveloperTest.Data;
 using ClearBank.DeveloperTest.Factories;
-using ClearBank.DeveloperTest.Interfaces;
 using ClearBank.DeveloperTest.Types;
 
 namespace ClearBank.DeveloperTest.Services
 {
     public class AccountRepository : IAccountRepository
     {
-        protected IDataStore DataStore = null;
+        private IDataStore DataStore;
 
         public AccountRepository(IConfigurationManager configurationManager, IDataStoreFactory dataStoreFactory)
         {
             // In my opinion, reading the app data and creating store should be done by the PaymentService consumer.
             // Since there is no consumer class,I made the repository class to do this.
-            // Instead of IConfigurationManager and IDataStoreFactory,I would inject only the IDataStore in to this class
+            // Instead of IConfigurationManager and IDataStoreFactory, I would inject only the IDataStore in to this class
             var dataStoreType = configurationManager.GetAppSettings("DataStoreType");            
             var dataStore = dataStoreFactory.CreateDataStore(dataStoreType);
             
@@ -25,9 +24,9 @@ namespace ClearBank.DeveloperTest.Services
             return DataStore.GetAccount(accountNumber);
         }
 
-        public bool UpdateAccount(Account account, decimal amount)
+        public bool UpdateAccount(Account account, decimal newBalance)
         {
-            account.Balance -= amount;
+            account.Balance = newBalance;
 
             DataStore.UpdateAccount(account);
 

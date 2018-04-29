@@ -2,7 +2,7 @@
 
 namespace ClearBank.DeveloperTest.Validators
 {
-    public class BacsPaymentValidator : PaymentSchemeValidator
+    public class BacsPaymentValidator : PaymentValidator
     {
         public override bool IsValid(Account account, decimal amount)
         {

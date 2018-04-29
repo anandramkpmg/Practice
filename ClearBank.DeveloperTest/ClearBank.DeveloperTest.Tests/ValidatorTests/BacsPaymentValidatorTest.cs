@@ -7,7 +7,7 @@ namespace ClearBank.DeveloperTest.Tests.ValidatorTests
     public class BacsPaymentValidatorTest
     {
         [Fact]
-        public void BacsPaymentValidator_AllowedPaymentSchemes_ReturnsValid()
+        public void IsValid_BacsInAllowedPaymentSchemes_ReturnsValid()
         {
             var bacs = new BacsPaymentValidator();
 
@@ -16,7 +16,7 @@ namespace ClearBank.DeveloperTest.Tests.ValidatorTests
         }
 
         [Fact]
-        public void BacsPaymentValidator_AccountHasInValidPaymentSchemes_ReturnsInValid()
+        public void IsValid_BacsNotInAllowedPaymentSchemes_ReturnsInvalid()
         {
             var bacs = new BacsPaymentValidator();
 
